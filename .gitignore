@@ -6,3 +6,4 @@ node_modules
 project.properties
 project.xml
 /nbproject/private/
+bin

@@ -46,7 +46,7 @@ gulp.task('license', function() {
       return 'File: ' + file.path.replace(__dirname, '') + "\n" + contents;
     }))
     .pipe(concat('LICENSE.txt'))
-    .pipe(gulp.dest(''));
+    .pipe(gulp.dest('bin'));
 });
 
 var packageJson = require('./package.json');
@@ -56,9 +56,9 @@ gulp.task('scripts', function() {
     .pipe(wrap({src: 'src/template.txt'}, {version: packageJson.version}, {variable: 'data'}))
     .pipe(gulp.dest('bin/'))
     .pipe(rename('jsencrypt.min.js'))
-    .pipe(uglify({preserveComments: 'license'}))
+    .pipe(uglify())
     .pipe(gulp.dest('bin'));
 });
 
-gulp.task('build', ['lint', 'scripts', 'license']);
-gulp.task('default', ['build']);
+gulp.task('build', gulp.series('lint', 'scripts', 'license'));
+gulp.task('default', gulp.series('build'));
